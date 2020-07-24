@@ -1,58 +1,71 @@
-import tkinter as tk
+from tkinter import *
 from PIL import ImageTk, Image
 
 
-class TicTacToe(tk.Tk()):
+root = Tk()
+BUTTON_H = 100
+BUTTON_W = 100
+BUTTON_BG = '#4E4540'
+BUTTON_ACTIVE_BG = '#403834'
 
-	BUTTON_H = 100
-	BUTTON_W = 100
+# Import an empty image
+null_img = Image.open('assests/null.png')
+null_img = ImageTk.PhotoImage(null_img.resize((100,100), Image.ANTIALIAS))
 
-	BUTTON_BG = '#4E4540'
-	BUTTON_ACTIVE_BG = '#403834'
+# Import image and icon for X
+X_img = Image.open('assests/X2.png')
+X_icon = ImageTk.PhotoImage(X_img.resize((15, 12), Image.ANTIALIAS))
+X_img = ImageTk.PhotoImage(X_img.resize((95, 80), Image.ANTIALIAS))
 
-	null_img = Image.open('null.png')
-	null_img = ImageTk.PhotoImage(null_img.resize((100,100), Image.ANTIALIAS))
+# Import horizontally striked X
+X_hor = Image.open('assests/X2_hor.png')
+X_hor = ImageTk.PhotoImage(X_hor.resize((95, 80), Image.ANTIALIAS))
 
-	X_img = Image.open('X2.png')
-	X_icon = ImageTk.PhotoImage(X_img.resize((15, 12), Image.ANTIALIAS))
-	X_img = ImageTk.PhotoImage(X_img.resize((100, 80), Image.ANTIALIAS))
+# Import vertically striked X
+X_vert = Image.open('assests/X2_vert.png')
+X_vert = ImageTk.PhotoImage(X_vert.resize((95, 80), Image.ANTIALIAS))
 
-	O_img = Image.open('O2.png')
-	O_icon = ImageTk.PhotoImage(O_img.resize((14, 14), Image.ANTIALIAS))
-	O_img = ImageTk.PhotoImage(O_img.resize((90, 90), Image.ANTIALIAS))
+# Import diagonally strikedX
+X_diag = Image.open('assests/X2_diag.png')
+X_diag = ImageTk.PhotoImage(X_diag.resize((95, 80), Image.ANTIALIAS))
 
-	def __init__(self, *args, **kwargs):
-		tk.Tk().__init__(self, *args, **kwargs)
-		self.title('Tic Tac Toe')
-		self.configure(bg='#4E4540')
+# Import another diagonally striked X
+X_diag2 = Image.open('assests/X2_diag2.png')
+X_diag2 = ImageTk.PhotoImage(X_diag2.resize((95, 80), Image.ANTIALIAS))
 
-		self.button1 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button1, 1))
-		self.button2 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button2, 2))
-		self.button3 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button3, 3))
+# Import image and icon for O
+O_img = Image.open('assests/O2.png')
+O_icon = ImageTk.PhotoImage(O_img.resize((14, 14), Image.ANTIALIAS))
+O_img = ImageTk.PhotoImage(O_img.resize((90, 90), Image.ANTIALIAS))
 
-		self.button4 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button4, 4))
-		self.button5 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button5, 5))
-		self.button6 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button6, 6))
+# Import horizontally striked O
+O_hor = Image.open('assests/O2_hor2.png')
+O_hor = ImageTk.PhotoImage(O_hor.resize((90, 90), Image.ANTIALIAS))
 
-		self.button7 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button7, 7))
-		self.button8 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button8, 8))
-		self.button9 = tk.Button(root, height=BUTTON_H, width=BUTTON_W, bg=BUTTON_BG, activebackground=BUTTON_ACTIVE_BG, image=null_img, cursor="circle", command= lambda: button_clicked(button9, 9))
+# Import vertically striked O
+O_vert = Image.open('assests/O2_vert2.png')
+O_vert = ImageTk.PhotoImage(O_vert.resize((90, 90), Image.ANTIALIAS))
 
-	def place_buttons(self):
-		self.button1.grid(row=1,column=0)
-		self.button2.grid(row=1,column=1)
-		self.button3.grid(row=1,column=2)
+# Import diagonally striked O
+O_diag = Image.open('assests/O2_diag.png')
+O_diag = ImageTk.PhotoImage(O_diag.resize((90, 90), Image.ANTIALIAS))
 
-		self.button4.grid(row=2,column=0)
-		self.button5.grid(row=2,column=1)
-		self.button6.grid(row=2,column=2)
-
-		self.button7.grid(row=3,column=0)
-		self.button8.grid(row=3,column=1)
-		self.button9.grid(row=3,column=2)
+# Import another diagonally striked O
+O_diag2 = Image.open('assests/O2_diag2.png')
+O_diag2 = ImageTk.PhotoImage(O_diag2.resize((90, 90), Image.ANTIALIAS))
 
 
-tictactoe = TicTacToe()
-tictactoe.mainloop()
+top_frame = Frame(root, relief='groove')
+top_frame.grid(row=0, pady=5)
+
+Score_Label = Label(top_frame, bg=BUTTON_BG, text='( 0 - 0 )', foreground='#FFFFFF')
+Player1_Label = Button(top_frame, bg=BUTTON_BG, image=X_icon, activebackground=BUTTON_BG, relief='flat')
+Player2_Label = Button(top_frame, bg=BUTTON_BG, image=O_icon, activebackground=BUTTON_BG, relief='flat')
+
+Score_Label.grid(row=0,column=1, ipadx=32)
+Player1_Label.grid(row=0, column=0, ipadx=23, pady=1)
+Player2_Label.grid(row=0, column=2, ipadx=23, pady=1)
+
+root.mainloop()
 
 
