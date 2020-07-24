@@ -1,11 +1,14 @@
 from tkinter import *
 from PIL import ImageTk, Image
 import random
-import time
+import pygame
+import math
 
 root = Tk()
 root.title('Tic Tac Toe')
 root.configure(bg='#4E4540')
+root.resizable(width=False, height=False)
+
 
 # Global list to hold values of the tic-tac-toe board. Each three positions represent a row on the board
 board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -16,6 +19,10 @@ turn = 0
 # A counter to keep track of player's scores
 x_score = 0
 o_score = 0
+
+# A bool to keep track if any player wins. 
+is_game_over_x = False
+is_game_over_o = False
 
 # A variable to keep track of player mode. (1 = Player vs Player, 2 = Player vs CPU)
 player_mode = 2
@@ -72,6 +79,8 @@ O_diag = ImageTk.PhotoImage(O_diag.resize((90, 90), Image.ANTIALIAS))
 O_diag2 = Image.open('assests/O_Assets/O2_diag2.png')
 O_diag2 = ImageTk.PhotoImage(O_diag2.resize((90, 90), Image.ANTIALIAS))
 
+# Initaliazie pygame
+pygame.init()
 
 def player_highlight():
     """
@@ -97,26 +106,34 @@ def button_clicked(button, button_idx):
 
     if turn % 2 == 0:
         if board[button_idx-1] == 0:
+            button_sound()
             button.config(image=X_img)
             board[button_idx-1] = 1
             turn += 1
             player_highlight()
-            if player_mode == 2:
+            if player_mode == 2 and check_board(1) is False:
+                button_sound()
                 pc_play()
     else:
         if player_mode == 1:
             if board[button_idx-1] == 0:
+                button_sound()
                 button.config(image=O_img)
-                board[button_idx-1] = 2
+                board[button_idx-1] = -1
                 turn += 1
     checkgame()
     player_highlight()
+
+def button_sound():
+    sound = pygame.mixer.Sound('assests/sounds/Button_Sound.wav')
+    sound.play()
 
 def pc_play():
     """
     Function that chooses random spots to place O for pc 
     """
     global turn
+
     while True:
         # If all spots on board are filled up then get out of this loop
 
@@ -128,7 +145,7 @@ def pc_play():
         if board[i] == 0:
             #root.after(400)
             button_list[i].config(image=O_img)
-            board[i] = 2
+            board[i] = -1
             turn += 1
 
             break
@@ -141,7 +158,7 @@ def check_board(player):
 
     Parameters
     ----------
-    player (int): indicates the player. (1 for "X" and 2 for "O")
+    player (int): indicates the player. (1 for "X" and -1 for "O")
 
     Returns
     -------
@@ -149,7 +166,7 @@ def check_board(player):
         (True/False) if the inputed player has won. 
     """
     if player == 1:
-        sign = 2
+        sign = -1
         # Checks if X won horizontally
         if sign not in board[0:3] and 0 not in board[0:3]:
             set_sprites_over(1, 123)
@@ -287,49 +304,71 @@ def set_sprites_over(player, orientation):
             button7.config(image=O_diag2)
 
 
-
-
-def checkgame():
+def checkgame(return_str=False):
     """
     Called every time a move is placed. Checks if either X or O won in any way. 
+
+    :param return_str (bool): Indicates whether you want this func to return the result
     """
     global turn
     global x_score
     global o_score
+    global is_game_over_x
+    global is_game_over_o
+
     if turn > 4:
         is_game_over_x = check_board(1)
         if is_game_over_x is True:
-            x_score += 1
-            Score_Label.configure(text='YOU WON', foreground='#32CD32')
-            Score_Label.grid(row=0,column=1, ipadx=12)
-            button_disabled()
+            if return_str:
+                return 'X'
+            else:
+                x_score += 1
+                Score_Label.configure(text='YOU WON', foreground='#32CD32')
+                Score_Label.grid(row=0,column=1, ipadx=12)
+                button_disabled()
+            
 
         # Check if PC has won
     if turn > 5:
-        is_game_over_o = check_board(2)
+        is_game_over_o = check_board(-1)
         if is_game_over_o is True:
-            o_score += 1
-            Score_Label.configure(text='YOU LOST', foreground='#DC143C')
-            Score_Label.grid(row=0,column=1, ipadx=12)
-            button_disabled()
+            if return_str:
+                return 'O'
+            else:
+                o_score += 1
+                Score_Label.configure(text='YOU LOST', foreground='#DC143C')
+                Score_Label.grid(row=0,column=1, ipadx=12)
+                button_disabled()
+            
 
         # Prints out tie if all the positions on board are filled and player1 and player2 haven't won.
         # As total positions on board are 9, when turn is 9 and no one won the game, end the game and print 'tie'
         if turn >= 9:
             is_game_over_x = check_board(1)
-            is_game_over_o = check_board(2)
+            is_game_over_o = check_board(-1)
             if is_game_over_x:
-                Score_Label.configure(text='YOU WON', foreground='#32CD32')
-                Score_Label.grid(row=0,column=1, ipadx=12)
-                button_disabled()
+                if return_str:
+                    return 'O'
+                else:
+                    Score_Label.configure(text='YOU WON', foreground='#32CD32')
+                    Score_Label.grid(row=0,column=1, ipadx=12)
+                    button_disabled()
             elif is_game_over_o:
-                Score_Label.configure(text='YOU LOST', foreground='#DC143C')
-                Score_Label.grid(row=0,column=1, ipadx=12)
-                button_disabled()
+                if return_str:
+                    return 'O'
+                else:
+                    Score_Label.configure(text='YOU LOST', foreground='#DC143C')
+                    Score_Label.grid(row=0,column=1, ipadx=12)
+                    button_disabled()
+
             else:
-                Score_Label.configure(text='YOU TIED', foreground='#FFFF99')
-                Score_Label.grid(row=0,column=1, ipadx=12)
-                button_disabled()
+                if return_str:
+                    return 'tie'
+                else:
+                    Score_Label.configure(text='YOU TIED', foreground='#FFFF99')
+                    Score_Label.grid(row=0,column=1, ipadx=12)
+                    button_disabled()
+                
 
 
 def reset_board():
@@ -360,10 +399,12 @@ def reset_board():
     button_normal()
     update_score()
 
+
 def update_score():
     """ Used when retry is clicked. Updates the score. """
     score_text = '( ' + str(x_score) + ' - ' + str(o_score) + ' )'
     Score_Label.configure(text=score_text)
+
 
 def button_disabled():
     """
@@ -479,7 +520,7 @@ button9.grid(row=3,column=2)
 button_list = [button1, button2, button3, button4, button5, button6, button7, button8, button9]
 
 # Place the Michallancheous buttons on screen
-retry_button.grid(row=4, column=1, ipadx=32, pady=3)
+retry_button.grid(row=4, column=1, ipadx=28, pady=3)
 
 # Place the player Mode button on screen
 p_mode.grid(row=4, column=0)
