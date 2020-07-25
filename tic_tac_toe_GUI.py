@@ -448,45 +448,45 @@ def gather_images():
     null_img = ImageTk.PhotoImage(null_img.resize((100,100), Image.ANTIALIAS))
 
     # Import image and icon for X
-    X_img = Image.open('assests/X_Assets/X2.png')
+    X_img = Image.open('assests/X_Assets/X.png')
     X_icon = ImageTk.PhotoImage(X_img.resize((15, 12), Image.ANTIALIAS))
     X_img = ImageTk.PhotoImage(X_img.resize((95, 80), Image.ANTIALIAS))
 
     # Import horizontally striked X
-    X_hor = Image.open('assests/X_Assets/X2_hor.png')
+    X_hor = Image.open('assests/X_Assets/X_hor.png')
     X_hor = ImageTk.PhotoImage(X_hor.resize((95, 80), Image.ANTIALIAS))
 
     # Import vertically striked X
-    X_vert = Image.open('assests/X_Assets/X2_vert.png')
+    X_vert = Image.open('assests/X_Assets/X_vert.png')
     X_vert = ImageTk.PhotoImage(X_vert.resize((95, 80), Image.ANTIALIAS))
 
     # Import diagonally strikedX
-    X_diag = Image.open('assests/X_Assets/X2_diag.png')
+    X_diag = Image.open('assests/X_Assets/X_diag.png')
     X_diag = ImageTk.PhotoImage(X_diag.resize((95, 80), Image.ANTIALIAS))
 
     # Import another diagonally striked X
-    X_diag2 = Image.open('assests/X_Assets/X2_diag2.png')
+    X_diag2 = Image.open('assests/X_Assets/X_diag2.png')
     X_diag2 = ImageTk.PhotoImage(X_diag2.resize((95, 80), Image.ANTIALIAS))
 
     # Import image and icon for O
-    O_img = Image.open('assests/O_Assets/O2.png')
+    O_img = Image.open('assests/O_Assets/O.png')
     O_icon = ImageTk.PhotoImage(O_img.resize((14, 14), Image.ANTIALIAS))
     O_img = ImageTk.PhotoImage(O_img.resize((90, 90), Image.ANTIALIAS))
 
     # Import horizontally striked O
-    O_hor = Image.open('assests/O_Assets/O2_hor2.png')
+    O_hor = Image.open('assests/O_Assets/O_hor2.png')
     O_hor = ImageTk.PhotoImage(O_hor.resize((90, 90), Image.ANTIALIAS))
 
     # Import vertically striked O
-    O_vert = Image.open('assests/O_Assets/O2_vert2.png')
+    O_vert = Image.open('assests/O_Assets/O_vert2.png')
     O_vert = ImageTk.PhotoImage(O_vert.resize((90, 90), Image.ANTIALIAS))
 
     # Import diagonally striked O
-    O_diag = Image.open('assests/O_Assets/O2_diag.png')
+    O_diag = Image.open('assests/O_Assets/O_diag.png')
     O_diag = ImageTk.PhotoImage(O_diag.resize((90, 90), Image.ANTIALIAS))
 
     # Import another diagonally striked O
-    O_diag2 = Image.open('assests/O_Assets/O2_diag2.png')
+    O_diag2 = Image.open('assests/O_Assets/O_diag2.png')
     O_diag2 = ImageTk.PhotoImage(O_diag2.resize((90, 90), Image.ANTIALIAS))
 
     return (null_img, X_icon, X_img, X_hor, X_vert, X_diag, X_diag2, O_icon, O_img, O_hor, O_vert, O_diag, O_diag2)
