@@ -1,5 +1,5 @@
 ## Tic Tac Toe by Sainitin D
-This is my implementation of tic tac toe using python and pygame. I created this a while ago to get familiar with python and make something along the way. I created and added all of the UI/visuals for a good user experience. Also, all of the project has been thoroughly commented so feel free to take a look.
+This is my implementation of tic tac toe using python, pygame and tkinter. I created this a while ago to get familiar with python and make something along the way. I created and added all of the UI/visuals for a good user experience. Also, all of the project has been thoroughly commented so feel free to take a look.
 
 
 ## Project Gameplay
